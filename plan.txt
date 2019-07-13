@@ -1,0 +1,77 @@
+タイトル
+    「画像掲示板（仮）」
+
+概要
+    画像投稿ができる
+    会員制の掲示板
+
+目的
+    一からの設計、開発を実体験として身に付ける
+    基本のCRUD機能を盛り込んだ製作を身に付ける
+    学習段階で得られていない管理者機能、検索機能のスキルを得る
+
+
+必要となる機能
+    ログイン
+        ユーザー名とパスワードで
+    ログアウト 
+    投稿機能
+        ユーザー名
+        内容
+        画像（サイズ上限あり）
+        投稿時間
+    返信機能
+        ユーザー名
+        内容
+        画像（サイズ上限あり）
+        投稿時間
+    投稿削除機能
+        自身の投稿のみ消せる
+    ユーザー登録
+        ユーザー名
+        アドレス
+        パスワード
+    プロフィール編集
+        パスワード編集
+        プロフィール編集
+        プロフィール画像
+    管理者機能
+        ユーザー一覧表示
+        ユーザー検索
+        投稿内容曖昧検索
+        ユーザー削除
+        投稿削除
+
+
+必要ページ
+    登録画面(signup)
+    登録完了画面(completed)
+    ログイン（login）
+    ログアウト（logout→indexにリダイレクト）
+    投稿（index）
+    プロフィール（user）
+    プロフィール編集(edit)
+    管理者画面(admin/index)
+    管理者画面(検索)(admin/search)
+
+
+データベース(MySQL)
+    users
+        id INT AUTO_INCREMENT PRIMARY_KEY,
+        user_name VARCHAR(30) UNIQUE KEY,
+        user_pass VARCHAR(255),
+        user_profile VARCHAR(255),
+        user_img VARCHAR(255),
+        admin_flg BIT DEFAULT 0,
+        created DATETIME,
+        modified TIMESTAMP
+
+
+    posts
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        message VARCHAR(255),
+        user_id INT,
+        reply_message_id INT,
+        post_img VARCHAR(255),
+        created DATETIME,
+        modified TIMESTAMP
