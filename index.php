@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+if(empty($_SESSION)) {
+    header('Location: login.php');
+}
+
+var_dump($_SESSION);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 

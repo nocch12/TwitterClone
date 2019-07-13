@@ -4,9 +4,15 @@ namespace App;
 
 class Signup {
     private $_db;
+    private $_email;
+    private $_password;
+    private $_passCheck;
 
     //データベースに接続する
-    public function __construct() {
+    public function __construct($email, $password, $password_check) {
+        $this->_email = $email;
+        $this->_password = $password;
+        $this->_passCheck = $password_check;
         try {
             $this->_db = new \PDO(DSN, DB_USER, DB_PASS);
             $this->_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -23,13 +29,13 @@ class Signup {
         $error['password_check'] パスワード入力ミスのエラー
     */
     private function _checkInput() {
-        if($_POST['email'] === "") {
+        if($this->_email === "") {
             $error['email'] = true;
         }
-        if(strlen($_POST['password']) < 4 ||
-          $_POST['password'] === "") {
+        if(strlen($this->_password) < 4 ||
+          $this->_password === "") {
             $error['password'] = true;
-        } elseif ($_POST['password_check'] !== $_POST['password']) { //一回目のパスワードの入力が正しい場合のみ再入力チェックする
+        } elseif ($this->_passCheck !== $this->_password) { //一回目のパスワードの入力が正しい場合のみ再入力チェックする
             $error['password_check'] = "unmatch";
         }
 
@@ -46,7 +52,7 @@ class Signup {
     private function _checkDuplicate() {
         $account = $this->_db->prepare('SELECT COUNT(*) As cnt FROM users WHERE email=?');
 		$account->execute([
-			$_POST['email']
+			$this->_email
 		]);
 		$record = $account->fetch();
 		if ($record['cnt'] > 0) { //重複があった場合のみtrueを返す
@@ -70,7 +76,7 @@ class Signup {
 
 
     private function _passwordHash() {
-        $hash = password_hash($_POST['password'], PASSWORD_BCRYPT);
+        $hash = password_hash($this->_password, PASSWORD_BCRYPT);
 
         return $hash;
     }
@@ -88,10 +94,11 @@ class Signup {
             VALUES (:email, :password, NOW())';
         $stmt = $this->_db->prepare($sql);
         $stmt->execute([
-            ':email' => $_POST['email'],
+            ':email' => $this->_email,
             ':password' => $hash,
         ]);
 
+        $_SESSION['completed'] = true;
         //登録完了画面へ
         header('Location: ./completed.php');
 

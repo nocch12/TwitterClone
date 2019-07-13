@@ -1,11 +1,13 @@
 <?php
+session_start();
 
 require_once('core/config.php');
 require_once('functions.php');
 
-$signup = new App\Signup();
 
 if (!empty($_POST)) {
+    $signup = new App\Signup($_POST['email'], $_POST['password'], $_POST['password_check']);
+
     $error = $signup->getErrors();
 
     var_dump($error);
@@ -14,6 +16,7 @@ if (!empty($_POST)) {
         $signup->accountRegister();
     }
 }
+
 
 
 ?>

@@ -1,44 +1,47 @@
-<!DOCTYPE html>
-<html lang="ja">
+<?php
+session_start();
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="assets/css/uikit.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
+require_once('core/config.php');
+require_once('functions.php');
 
-    <script src="assets/js/uikit/uikit.min.js"></script>
-    <script src="assets/js/uikit/uikit-icons.min.js"></script>
-</head>
 
-<body>
-    <section id="header" class="uk-position-fixed uk-position-z-index">
-        <div class="uk-container uk-expand"></div>
-        <nav class="uk-navbar-container" uk-navbar>
-            <div class="uk-navbar-left">
-                <a class="uk-navbar-item uk-logo" href="#">Logo</a>
-            </div>
-    </section>
+if (!empty($_POST)) {
+    $login = new App\Login($_POST['email'], $_POST['password']);
+
+    $error = $login->getErrors();
+    
+    if(empty($error)) {
+        $login->login();
+    }
+}
+
+?>
+
+    <?php require_once('header.php'); ?>
 
     <section id="body">
         <div>
             <div class="uk-card uk-card-default uk-card-body uk-width-2-3 align-center up-form margin-center mt">
                 <h3 class="uk-card-title">Log In</h3>
-                <form action="completed.html" method="post">
+                <form action="" method="post">
 
                     <div class="uk-margin">
+                        <?php if ($error['email']) : ?>
+                        <p class="error"><?= '* 存在しないアカウントです。'; ?></p>
+                        <?php endif; ?>
                         <div class="uk-inline uk-width-2-3">
                             <span class="uk-form-icon" uk-icon="icon: mail"></span>
-                            <input class="uk-input" type="text" placeholder="メールアドレス">
+                            <input class="uk-input" type="email" name="email" placeholder="メールアドレス" value="<?= h($_POST['email']); ?>">
                         </div>
                     </div>
 
                     <div class="uk-margin">
+                        <?php if ($error['password']) : ?>
+                        <p class="error"><?= '* ログインに失敗しました'; ?></p>
+                        <?php endif; ?>
                         <div class="uk-inline uk-width-2-3">
                             <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
-                            <input class="uk-input" type="password" placeholder="パスワード">
+                            <input class="uk-input" type="password" name="password" placeholder="パスワード">
                         </div>
                     </div>
 
