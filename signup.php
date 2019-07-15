@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-require_once('core/config.php');
-require_once('functions.php');
+require_once(__DIR__ . '/core/config.php');
+require_once(__DIR__ . '/functions.php');
 
 
 if (!empty($_POST)) {
-    $signup = new App\Signup($_POST['email'], $_POST['password'], $_POST['password_check']);
+    $signup = new App\Signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['password_check']);
 
     $error = $signup->getErrors();
 
@@ -30,11 +30,22 @@ if (!empty($_POST)) {
                 <form action="" method="post">
 
                     <div class="uk-margin">
+                    <?php if ($error['name']) : ?>
+                        <p class="error"><?= '* ニックネームを4文字以上で入力してください'; ?></p>
+                    <?php elseif($error['duplicate']['name']) : ?>
+                        <p class="error"><?= '* 既に登録済みのユーザー名です。'; ?></p>
+                    <?php endif; ?>
+                        <div class="uk-inline uk-width-2-3">
+                            <span class="uk-form-icon" uk-icon="icon: user"></span>
+                            <input class="uk-input" type="text" name="name" placeholder="ニックネーム" value="<?= h($_POST['name']); ?>">
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
                         <?php if ($error['email']) : ?>
                         <p class="error"><?= '* メールアドレスを正しく入力してください'; ?></p>
-                        <?php endif; ?>
-                    <div class="uk-margin">
-                        <?php if ($error['duplicate']) : ?>
+                        <?php endif;
+                        if ($error['duplicate']['email']) : ?>
                         <p class="error"><?= '* 既に登録済みのメールアドレスです。'; ?></p>
                         <?php endif; ?>
                         <div class="uk-inline uk-width-2-3">
