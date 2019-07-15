@@ -6,7 +6,7 @@ require_once('functions.php');
 //ファイル名取得
 $dir = basename($_SERVER['SCRIPT_NAME']);
 
-var_dump($dir);
+var_dump($_SESSION);
 
 ?>
 
@@ -29,6 +29,8 @@ var_dump($dir);
 
     <script src="assets/js/uikit/uikit.min.js"></script>
     <script src="assets/js/uikit/uikit-icons.min.js"></script>
+    <script src="assets/js/jquery-3.4.1.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -36,7 +38,7 @@ var_dump($dir);
         <div class="uk-container uk-expand"></div>
         <nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
-                <a class="uk-navbar-item uk-logo" href="#">Logo</a>
+                <a class="uk-navbar-item uk-logo" href="/index.php">Logo</a>
             </div>
             
             <!-- 登録画面ではログイン画面へのリンク表示 -->
@@ -53,4 +55,44 @@ var_dump($dir);
                 <a class="uk-navbar-item uk-button uk-button-primary" href="<?= 'signup.php'; ?>">新規登録画面へ</a>
             </div>
             <?php endif; ?>
-    </section>
+
+            <?php if ($dir === 'index.php') : ?>
+            <div class="uk-navbar-right">
+                <div class="uk-navbar-item uk-visible@s">
+                    <form action="">
+                        <input class="uk-input uk-form-width-medium" name="search" type="search" placeholder="">
+                        <button class="uk-button uk-button-default">検索</button>
+                    </form>
+                </div>
+            <?php endif; ?>
+
+                
+                <!-- スマホ表示時のサイドナビ -->
+                <div class="uk-navbar-item uk-hidden@s">
+                    <button class="uk-button uk-button-default" type="button"
+                        uk-toggle="target: #offcanvas-flip">Open</button>
+
+                    <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
+                        <div class="uk-offcanvas-bar">
+
+                            <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+                            <h3>Title</h3>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt
+                                ut labore et dolore
+                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                                nisi ut
+                                aliquip ex ea
+                                commodo consequat.</p>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- サイドナビ -->
+
+            </div><!-- uk-navbar-right -->
+
+        </nav>
+    </section><!-- header -->
