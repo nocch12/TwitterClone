@@ -8,14 +8,12 @@ if(empty($_SESSION)) {
     header('Location: login.php');
 }
 
-$bbs = new App\Bbs();
+$account = new App\User();
 
-if (!empty($_POST)) {
-    $bbs->setPost($_POST, $_SESSION['id']);
-}
 
-$user = $bbs->getUser($_SESSION['id']);
-$posts = $bbs->getPosts();
+$posts = $account->getPosts();
+
+$user = $account->getUser();
 
 ?>
 
@@ -25,16 +23,6 @@ $posts = $bbs->getPosts();
         <div class="container">
             <div class="uk-padding" uk-grid>
                 <div class="uk-width-2-3@s">
-
-                    <!-- 投稿フォーム -->
-                    <form id="post" action="" method="post" class="uk-text-right" enctype="multipart/form-data">
-                        <textarea id="ta" name="message" class="uk-textarea uk-text-left" placeholder="呟いてみましょう！"></textarea>
-                        <label uk-icon="icon: image; ratio: 2" type="button" tabindex="-1" class="input_image" for="post_image">
-                            <input type="file" id="post_image" name="image">
-                        </label>
-                        <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
-                        <button class="uk-button uk-button-primary uk-margin post_submit" type="submit">Primary</button>
-                    </form>
 
                     <!-- 投稿一覧 -->
                     <main id="posts">
@@ -60,7 +48,7 @@ $posts = $bbs->getPosts();
                                         </div><!-- post_user_img -->
 
                                         <div class="uk-width-expand post_user_name">
-                                            <a href="user.php?user=<?= h($post->name) ?>" class="uk-text-success uk-margin-remove-bottom user_name"><?= h($post->name); ?></a>
+                                            <a href="user.php?user=<?= h($post->id) ?>" class="uk-text-success uk-margin-remove-bottom user_name"><?= h($post->name); ?></a>
                                             <!-- user_name -->
 
                                             <p class="uk-text-meta uk-margin-remove-top posted_time"><time

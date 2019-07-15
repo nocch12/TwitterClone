@@ -1,2 +1,8 @@
 # coreディレクトリを無視
 /core/
+
+# posted_imagesディレクトリを無視
+/posted_images/
+
+# user_imagesディレクトリを無視
+/user_images/
