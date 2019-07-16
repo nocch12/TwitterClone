@@ -45,7 +45,7 @@ var_dump($user);
 
                                     <div class="post_inner uk-grid-small uk-flex-middle" uk-grid>
                                         <div class="uk-width-auto post_user_img">
-                                            <img class="uk-border-circle" width="50" height="50"
+                                            <img class="uk-border-circle image_circle50" width="50" height="50"
                                                 src="<?php
                                                 if (empty($user->image)) {
                                                     echo "./assets/images/noicon.jpg";
@@ -121,7 +121,7 @@ var_dump($user);
                                     echo "./user_images/" . $user->image;
                                 }
                                 ?>" data-alt="Image">
-                                    <img class="uk-border-circle image_circle" width="80" height="80" src="<?php
+                                    <img class="uk-border-circle image_circle80" width="80" height="80" src="<?php
                                 if (empty($user->image)) {
                                     echo "./assets/images/noicon.jpg";
                                 } else {
