@@ -60,27 +60,29 @@ class User {
     }
     
     public function setProfile($prof) {
-        $image = '';
-        $profile = '';
 
-        if(isset($_FILES['image'])) {
-            
+        if($_FILES['image']['name']) {
             $this->_uploadProfileImage();
-            $image = $this->_imageFileName;
-        }
-        if(isset($prof['profile'])) {
-            $profile = $prof['profile'];
+            $this->_updateProfileImage();
         }
 
+        if(isset($prof['profile'])) {
+            $this->_updateProfile($prof['profile']);
+        }
         
+        header('Location: user.php');
+        exit;
+        
+    }
+
+    private function _updateProfile($profile) {
         try {
             $sql =
             'UPDATE users
-            SET image = :image, profile = :profile
+            SET profile = :profile
             WHERE id = :id';
 
             $stmt = $this->_db->prepare($sql);
-            $stmt->bindvalue(':image', $image, \PDO::PARAM_STR);
             $stmt->bindvalue(':profile', $profile, \PDO::PARAM_STR);
             $stmt->bindvalue(':id', $this->_id, \PDO::PARAM_STR);
             
@@ -90,10 +92,25 @@ class User {
             echo $e->getMessage();
             exit;
         }
-        
-        header('Location: user.php');
-        exit;
-        
+    }
+
+    private function _updateProfileImage() {
+        try {
+            $sql =
+            'UPDATE users
+            SET image = :image
+            WHERE id = :id';
+
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindvalue(':image', $this->_imageFileName, \PDO::PARAM_STR);
+            $stmt->bindvalue(':id', $this->_id, \PDO::PARAM_STR);
+            
+            $stmt->execute();
+
+        } catch(\Exceotion $e) {
+            echo $e->getMessage();
+            exit;
+        }
     }
 
     private function _uploadProfileImage() {
@@ -107,8 +124,10 @@ class User {
             $_SESSION['success'] = 'Upload Done!';
         } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
-            // exit;
+            exit;
         }
+
+        
     }
 
 

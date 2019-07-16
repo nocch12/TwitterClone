@@ -12,7 +12,7 @@ $account = new App\User();
 
 $prof = array_filter($_POST);
 if ($prof ||
-    ($_FILES['image'])) {
+    ($_FILES['image']['name'])) {
     $account->setProfile($prof);
 }
 
@@ -35,6 +35,7 @@ $user = $account->getUser();
                                     <input type="file" id="upimage" name="image">
                                     <input class="uk-input uk-form-width-medium" type="text" placeholder="プロフィール画像" disabled>
                                 </div>
+                                <label for="upimage" class="uk-button uk-button-primary">ファイルを選択</label>
                             </div>
                             <div class="uk-margin">
                                 <textarea class="uk-textarea" rows="5" placeholder="プロフィール文" name="profile"></textarea>
