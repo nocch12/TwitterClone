@@ -23,8 +23,49 @@ var_dump($user);
 
     <section id="body">
         <div class="container">
-            <div class="uk-padding" uk-grid>
-                <div class="uk-width-2-3@s">
+            <div class="uk-padding">
+                <!--プロフィール -->
+                <div id="profile" class="uk-width-2-3@m margin-center">
+                    <div class="uk-card uk-card-default">
+                        <div class="uk-card-media-top uk-padding-small align-center">
+                            <div uk-lightbox>
+                                <a href="<?php
+                                if (empty($user->image)) {
+                                    echo "./assets/images/noicon.jpg";
+                                } else {
+                                    echo "./user_images/" . $user->image;
+                                }
+                                ?>" data-alt="Image">
+                                    <img class="uk-border-circle image_circle80" width="80" height="80" src="<?php
+                                if (empty($user->image)) {
+                                    echo "./assets/images/noicon.jpg";
+                                } else {
+                                    echo "./user_images/" . $user->image;
+                                }
+                                ?>">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="uk-card-header">
+                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href=""><?= h($user->name); ?></a></h3>
+                        </div>
+                        <div class="uk-card-body">
+                            <?php if($user->profile) {
+                                echo h($user->profile);
+                            } else {
+                                echo 'プロフィールがありません。';
+                            } ?>
+
+                        <?php if($_SESSION['name'] === $user->name) : ?>
+                            <div class="rewrite uk-align-right">
+                                <a href="./edit.php" class="uk-icon-button" uk-icon="pencil"></a>
+                            </div>
+                        <?php endif; ?>
+                        </div>
+                    </div>
+                </div><!-- profile -->
+
+                <div class="uk-margin uk-width-2-3@m margin-center">
 
                     <!-- 投稿一覧 -->
                     <main id="posts">
@@ -109,46 +150,6 @@ var_dump($user);
                     </div>
                 </div>
 
-                <!--プロフィール -->
-                <div id="profile" class="uk-width-1-3 uk-visible@s">
-                    <div class="uk-card uk-card-default">
-                        <div class="uk-card-media-top uk-padding-small align-center">
-                            <div uk-lightbox>
-                                <a href="<?php
-                                if (empty($user->image)) {
-                                    echo "./assets/images/noicon.jpg";
-                                } else {
-                                    echo "./user_images/" . $user->image;
-                                }
-                                ?>" data-alt="Image">
-                                    <img class="uk-border-circle image_circle80" width="80" height="80" src="<?php
-                                if (empty($user->image)) {
-                                    echo "./assets/images/noicon.jpg";
-                                } else {
-                                    echo "./user_images/" . $user->image;
-                                }
-                                ?>">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="uk-card-header">
-                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href=""><?= h($user->name); ?></a></h3>
-                        </div>
-                        <div class="uk-card-body">
-                            <?php if($user->profile) {
-                                echo h($user->profile);
-                            } else {
-                                echo 'プロフィールがありません。';
-                            } ?>
-
-                        <?php if($_SESSION['name'] === $user->name) : ?>
-                            <div class="rewrite uk-align-right">
-                                <a href="./edit.php" class="uk-icon-button" uk-icon="pencil"></a>
-                            </div>
-                        <?php endif; ?>
-                        </div>
-                    </div>
-                </div><!-- profile -->
 
             </div>
         </div>

@@ -40,7 +40,7 @@ var_dump(__DIR__);
         <div class="uk-container uk-expand"></div>
         <nav class="uk-navbar-container" uk-navbar>
             <div class="uk-navbar-left">
-                <a class="uk-navbar-item uk-logo" href="/index.php">Logo</a>
+                <a class="uk-navbar-item uk-logo" href="./">Logo</a>
             </div>
             
             <!-- 登録画面ではログイン画面へのリンク表示 -->
