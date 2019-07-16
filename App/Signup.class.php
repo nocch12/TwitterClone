@@ -105,6 +105,7 @@ class Signup {
     }
 
 
+    // DB保存前にパスワードはハッシュ化
     private function _passwordHash() {
         $hash = password_hash($this->_password, PASSWORD_BCRYPT);
 
@@ -120,13 +121,16 @@ class Signup {
     public function accountRegister() {
         $hash = $this->_passwordHash();
 
-        $sql = 'INSERT users(name, email, password, created)
-            VALUES (:name, :email, :password, NOW())';
+        $sql = 'INSERT users(name, email, password, img, created)
+            VALUES (:name, :email, :password, :img, NOW())';
         $stmt = $this->_db->prepare($sql);
+
+        // bindvalue使った方がいい??
         $stmt->execute([
             ':name' => $this->_name,
             ':email' => $this->_email,
             ':password' => $hash,
+            ':img' => $img
         ]);
 
         $_SESSION['completed'] = true;

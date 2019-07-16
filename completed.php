@@ -7,7 +7,11 @@
     */
     if (!($_SESSION['completed'])) {
         header('Location: login.php');
+        exit;
     }
+
+    unset($_SESSION['completed']);
+
 ?>
 
 

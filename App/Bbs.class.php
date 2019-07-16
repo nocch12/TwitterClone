@@ -103,8 +103,7 @@ class Bbs {
             $this->_save($ext);
             
             $_SESSION['success'] = 'Upload Done!';
-
-            return $savePath;
+            
         } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
             // exit;
@@ -118,7 +117,7 @@ class Bbs {
             sha1(uniqid(mt_rand(), true)),
             $ext
         );
-        $savePath = IMAGES_DIR . '/' . $this->_imageFileName;
+        $savePath = POST_IMAGES_DIR . '/' . $this->_imageFileName;
         $res = move_uploaded_file($_FILES['image']['tmp_name'], $savePath);
         if ($res === false) {
             throw new \Exception('Could not upload!');

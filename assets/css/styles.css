@@ -15,6 +15,9 @@ article .uk-card-body {
   margin-top: 30px;
   align-items: center;
 }
+.uk-border-circle {
+  box-shadow: 0 0 5px 1px #cccccc6e;
+}
 
 .align-center {
   text-align: center;
@@ -23,6 +26,10 @@ article .uk-card-body {
 #header {
   width: 100%;
   z-index: 1000;
+}
+#header .uk-logo {
+  color: #26c98d;
+  font-weight: bold;
 }
 
 #body {
@@ -69,7 +76,7 @@ article .uk-card-body {
   margin-right: 15px;
 }
 
-input[type='file'] {
+#post_image {
   display: none;
 }
 .card_message {
@@ -93,3 +100,18 @@ input[type='file'] {
   z-index: 3;
 }
 
+.uk-icon-button {
+  color: #fff;
+  background: #ff5e49;
+}
+.uk-icon-button:hover {
+    color: #fff;
+  background: #ff7d6c;
+}
+.rewrite {
+  margin-top: 15px;
+}
+.image_circle {
+  width: 80px;
+  height: 80px!important;
+}

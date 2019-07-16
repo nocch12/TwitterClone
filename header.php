@@ -7,6 +7,8 @@ require_once('functions.php');
 $dir = basename($_SERVER['SCRIPT_NAME']);
 
 var_dump($_SESSION);
+var_dump(__DIR__);
+
 
 ?>
 
@@ -64,7 +66,6 @@ var_dump($_SESSION);
                         <button class="uk-button uk-button-default">検索</button>
                     </form>
                 </div>
-            <?php endif; ?>
 
                 
                 <!-- スマホ表示時のサイドナビ -->
@@ -91,6 +92,8 @@ var_dump($_SESSION);
                     </div>
                 </div>
                 <!-- サイドナビ -->
+                
+            <?php endif; ?>
 
             </div><!-- uk-navbar-right -->
 
