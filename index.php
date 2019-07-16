@@ -17,6 +17,8 @@ if (!empty($_POST)) {
 $user = $bbs->getUser($_SESSION['id']);
 $posts = $bbs->getPosts();
 
+var_dump($user);
+
 ?>
 
     <?php require_once('header.php'); ?>
@@ -55,8 +57,13 @@ $posts = $bbs->getPosts();
 
                                     <div class="post_inner uk-grid-small uk-flex-middle" uk-grid>
                                         <div class="uk-width-auto post_user_img">
-                                            <img class="uk-border-circle" width="50" height="50"
-                                                src="/assets/images/aaa.png">
+                                            <img class="uk-border-circle" width="50" height="50" src="<?php
+                                                if (empty($post->image)) {
+                                                echo "./assets/images/noicon.jpg";
+                                            } else {
+                                                echo "./user_images/" . $post->image;
+                                            }
+                                            ?>">
                                         </div><!-- post_user_img -->
 
                                         <div class="uk-width-expand post_user_name">
@@ -77,9 +84,9 @@ $posts = $bbs->getPosts();
 
                                 <?php if($post->post_image) : ?>
                                 <div class="uk-card-media-right uk-cover-container uk-width-1-3" uk-lightbox>
-                                    <a href="/posted_images/<?= h($post->post_image); ?>" data-alt="Image">
+                                    <a href="./posted_images/<?= h($post->post_image); ?>" data-alt="Image">
                                         <div class="post_image_wrap">
-                                            <img class="post_image" src="/posted_images/<?= h($post->post_image); ?>">
+                                            <img class="post_image" src="./posted_images/<?= h($post->post_image); ?>">
                                         </div><!-- post_img_wrap -->
                                     </a>
                                 </div><!-- light-box -->
@@ -118,13 +125,25 @@ $posts = $bbs->getPosts();
                     <div class="uk-card uk-card-default">
                         <div class="uk-card-media-top uk-padding-small align-center">
                             <div uk-lightbox>
-                                <a href="/assets/images/aaa.png" data-alt="Image">
-                                    <img class="uk-border-circle" width="80" height="80" src="/assets/images/aaa.png">
+                                <a href="<?php
+                                if (empty($user->image)) {
+                                    echo "./assets/images/noicon.jpg";
+                                } else {
+                                    echo "./user_images/" . $user->image;
+                                }
+                                ?>" data-alt="Image">
+                                    <img class="uk-border-circle" width="80" height="80" src="<?php
+                                if (empty($user->image)) {
+                                    echo "./assets/images/noicon.jpg";
+                                } else {
+                                    echo "./user_images/" . $user->image;
+                                }
+                                ?>">
                                 </a>
                             </div>
                         </div>
                         <div class="uk-card-header">
-                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href="user.php"><?= h($user->name); ?></a></h3>
+                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href="user.php?user=<?= $user->name ?>"><?= h($user->name); ?></a></h3>
                         </div>
                         <div class="uk-card-body">
                             <?php if($user->profile) {

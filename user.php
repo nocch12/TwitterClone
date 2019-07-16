@@ -15,6 +15,8 @@ $posts = $account->getPosts();
 
 $user = $account->getUser();
 
+var_dump($user);
+
 ?>
 
     <?php require_once('header.php'); ?>
@@ -44,11 +46,17 @@ $user = $account->getUser();
                                     <div class="post_inner uk-grid-small uk-flex-middle" uk-grid>
                                         <div class="uk-width-auto post_user_img">
                                             <img class="uk-border-circle" width="50" height="50"
-                                                src="/assets/images/aaa.png">
+                                                src="<?php
+                                                if (empty($user->image)) {
+                                                    echo "./assets/images/noicon.jpg";
+                                                } else {
+                                                    echo "./user_images/" . $user->image;
+                                                }
+                                                ?>">
                                         </div><!-- post_user_img -->
 
                                         <div class="uk-width-expand post_user_name">
-                                            <a href="user.php?user=<?= h($post->id) ?>" class="uk-text-success uk-margin-remove-bottom user_name"><?= h($post->name); ?></a>
+                                            <a href="user.php?user=<?= h($user->name) ?>" class="uk-text-success uk-margin-remove-bottom user_name"><?= h($user->name); ?></a>
                                             <!-- user_name -->
 
                                             <p class="uk-text-meta uk-margin-remove-top posted_time"><time
@@ -106,20 +114,38 @@ $user = $account->getUser();
                     <div class="uk-card uk-card-default">
                         <div class="uk-card-media-top uk-padding-small align-center">
                             <div uk-lightbox>
-                                <a href="/assets/images/aaa.png" data-alt="Image">
-                                    <img class="uk-border-circle" width="80" height="80" src="/assets/images/aaa.png">
+                                <a href="<?php
+                                if (empty($user->image)) {
+                                    echo "./assets/images/noicon.jpg";
+                                } else {
+                                    echo "./user_images/" . $user->image;
+                                }
+                                ?>" data-alt="Image">
+                                    <img class="uk-border-circle image_circle" width="80" height="80" src="<?php
+                                if (empty($user->image)) {
+                                    echo "./assets/images/noicon.jpg";
+                                } else {
+                                    echo "./user_images/" . $user->image;
+                                }
+                                ?>">
                                 </a>
                             </div>
                         </div>
                         <div class="uk-card-header">
-                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href="user.php"><?= h($user->name); ?></a></h3>
+                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href=""><?= h($user->name); ?></a></h3>
                         </div>
                         <div class="uk-card-body">
                             <?php if($user->profile) {
                                 echo h($user->profile);
                             } else {
-                                echo 'プロフィールを編集しよう！';
+                                echo 'プロフィールがありません。';
                             } ?>
+
+                        <?php if($_SESSION['name'] === $user->name) : ?>
+                            <div class="rewrite uk-align-right">
+                                <a href="./edit.php" class="uk-icon-button" uk-icon="pencil"></a>
+                            </div>
+                        <?php endif; ?>
                         </div>
                     </div>
                 </div><!-- profile -->
