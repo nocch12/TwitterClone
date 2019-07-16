@@ -4,19 +4,19 @@ namespace App;
 
 class User {
     private $_db;
+    private $_id;
     private $_user_name;
+    
+    private $_imageType;
+    private $_imageFileName = '';
 
-    // ログイン中のユーザーIDを受け取る
     public function __construct() {
         if(!isset($_GET['user'])) {
             $_GET['user'] = $_SESSION['name'];
         }
 
+        $this->_id = (int)$_SESSION['id'];
         $this->_user_name = $_GET['user'];
-
-        var_dump($_SESSION);
-        exit;
-        
 
         // データベースに接続
         try {
@@ -29,45 +29,74 @@ class User {
 
     }
 
-    // ランダムなトークンを発行する処理
-    private function _createToken() {
-        if(!isset($_SESSION['token'])) {
-            $_SESSION['token'] = bin2hex(\openssl_random_pseudo_bytes(16));
-        }
-    }
-
     // ユーザー情報を取得
     public function getUser() {
         
-        $stmt = $this->_db->prepare('SELECT name, profile, image FROM users WHERE id=?');
-		$stmt->execute([$this->_user_id]);
+        $stmt = $this->_db->prepare('SELECT name, profile, image FROM users WHERE name=?');
+		$stmt->execute([$this->_user_name]);
         $user = $stmt->fetch(\PDO::FETCH_OBJ);
 
         return $user;
     }
 
-    // 記事一覧を取得
+    // 表示中ユーザーの記事一覧を取得
     public function getPosts() {
         $sql = 
         'SELECT u.name, u.image, p.*
         FROM users u, posts p 
-        WHERE  u.id = :id
+        WHERE  u.name = :name
         AND u.id = p.user_id
         ORDER BY created DESC';
 
-        $id = $this->_user_id;
+        $name = $this->_user_name;
         
         $stmt = $this->_db->prepare($sql);
-        $stmt->bindvalue(':id', (int)$id, \PDO::PARAM_INT);
+        $stmt->bindvalue(':name', $name, \PDO::PARAM_STR);
         $stmt->execute();
         
         $posts = $stmt->fetchAll(\PDO::FETCH_OBJ);
-
+        
         return $posts;
     }
+    
+    public function setProfile($prof) {
+        $image = '';
+        $profile = '';
 
+        if(isset($_FILES['image'])) {
+            
+            $this->_uploadProfileImage();
+            $image = $this->_imageFileName;
+        }
+        if(isset($prof['profile'])) {
+            $profile = $prof['profile'];
+        }
 
-    private function _imageUpload() {
+        
+        try {
+            $sql =
+            'UPDATE users
+            SET image = :image, profile = :profile
+            WHERE id = :id';
+
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindvalue(':image', $image, \PDO::PARAM_STR);
+            $stmt->bindvalue(':profile', $profile, \PDO::PARAM_STR);
+            $stmt->bindvalue(':id', $this->_id, \PDO::PARAM_STR);
+            
+            $stmt->execute();
+
+        } catch(\Exceotion $e) {
+            echo $e->getMessage();
+            exit;
+        }
+        
+        header('Location: user.php');
+        exit;
+        
+    }
+
+    private function _uploadProfileImage() {
         try {
             $this->_validateUpload();
 
@@ -76,13 +105,12 @@ class User {
             $this->_save($ext);
             
             $_SESSION['success'] = 'Upload Done!';
-
-            return $savePath;
         } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
             // exit;
         }
     }
+
 
         private function _save($ext) {
         $this->_imageFileName = sprintf(
@@ -91,7 +119,7 @@ class User {
             sha1(uniqid(mt_rand(), true)),
             $ext
         );
-        $savePath = IMAGES_DIR . '/' . $this->_imageFileName;
+        $savePath = USER_IMAGES_DIR . '/' . $this->_imageFileName;
         $res = move_uploaded_file($_FILES['image']['tmp_name'], $savePath);
         if ($res === false) {
             throw new \Exception('Could not upload!');
