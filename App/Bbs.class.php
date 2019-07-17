@@ -52,36 +52,59 @@ class Bbs {
 
     // 記事投稿処理
     public function setPost($post, $id) {
+        // $idがstring型で来るのでint型にキャスト
+        // なくても一応動く
+        $id = (int)$id;
+        
+        // メッセージの空文字判定
+        $msg = $this->_validateMessage($post['message']);
+
         // トークンの一致をチェック
         $this->_validateToken();
         
-        // $idがstring型で来るので
-        // int型にキャスト
-        $id = (int)$id;
-        
-        if($_FILES['image']) {
+
+        // ファイルネームがある（何かしら送信されている）なら
+        // 画像アップロード処理
+        if($_FILES['image']['name']) {
             $this->_imageUpload();
         }
 
+        // 投稿内容をDBにインサート
         try {
             $sql =
             'INSERT 
             posts (message, user_id, post_image, created)
             values (:message , :user_id, :post_image, NOW())';
             $stmt = $this->_db->prepare($sql);
-            $stmt->bindparam(':message', $post['message'], \PDO::PARAM_STR);
-            $stmt->bindparam(':user_id', $id, \PDO::PARAM_INT);
-            $stmt->bindparam(':post_image', $this->_imageFileName, \PDO::PARAM_STR);
+            $stmt->bindvalue(':message', $msg, \PDO::PARAM_STR);
+            $stmt->bindvalue(':user_id', $id, \PDO::PARAM_INT);
+            $stmt->bindvalue(':post_image', $this->_imageFileName, \PDO::PARAM_STR);
             
             $stmt->execute();
 
         } catch(\Exceotion $e) {
-            echo $e->getMessage();
-            exit;
+            $_SESSION['error'] = $e->getMessage();
         }
         
         header('Location: index.php');
         exit;
+    }
+
+    private function _validateMessage($msg) {
+
+        $pattern="^(\s|　)+$";  //正規表現のパターン
+
+        // 空白文字のみで画像もなければ処理をせずリダイレクト
+        if(mb_ereg_match($pattern, $msg) &&
+            empty($_FILES['image']['name'])) {
+                
+                header('Location: index.php');
+                exit;
+            }
+
+            // 空白文字でなければそのまま返す
+            // 画像があればメッセージが空白でもOKなので返す
+            return $msg;
     }
 
     private function _validateToken() {
@@ -96,13 +119,15 @@ class Bbs {
 
     private function _imageUpload() {
         try {
+            // ファイルが正しくアップロードされているか
             $this->_validateUpload();
 
+            // ファイル形式が画像かどうか
+            // 画像なら拡張子が返ってくる
             $ext = $this->_validateImageType();
 
+            // 一時フォルダから本番フォルダに保存処理
             $this->_save($ext);
-            
-            $_SESSION['success'] = 'Upload Done!';
             
         } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
@@ -110,7 +135,8 @@ class Bbs {
         }
     }
 
-        private function _save($ext) {
+    private function _save($ext) {
+        // 日時、乱数でファイル名の重複を防ぐ
         $this->_imageFileName = sprintf(
             '%s_%s.%s',
             time(),
@@ -124,7 +150,7 @@ class Bbs {
         }
     }
 
-        private function _validateImageType() {
+    private function _validateImageType() {
         $this->_imageType = exif_imagetype($_FILES['image']['tmp_name']);
 
         switch($this->_imageType) {
