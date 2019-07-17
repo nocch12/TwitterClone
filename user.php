@@ -4,7 +4,7 @@ session_start();
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
-if(empty($_SESSION)) {
+if(empty($_SESSION['id'])) {
     header('Location: login.php');
 }
 
@@ -14,8 +14,6 @@ $account = new App\User();
 $posts = $account->getPosts();
 
 $user = $account->getUser();
-
-var_dump($user);
 
 ?>
 
@@ -53,7 +51,7 @@ var_dump($user);
                             <?php if($user->profile) {
                                 echo h($user->profile);
                             } else {
-                                echo 'プロフィールがありません。';
+                                echo 'プロフィールが登録されていません。';
                             } ?>
 
                         <?php if($_SESSION['name'] === $user->name) : ?>
@@ -114,9 +112,9 @@ var_dump($user);
 
                                 <?php if($post->post_image) : ?>
                                 <div class="uk-card-media-right uk-cover-container uk-width-1-3" uk-lightbox>
-                                    <a href="/posted_images/<?= h($post->post_image); ?>" data-alt="Image">
+                                    <a href="./posted_images/<?= h($post->post_image); ?>" data-alt="Image">
                                         <div class="post_image_wrap">
-                                            <img class="post_image" src="/posted_images/<?= h($post->post_image); ?>">
+                                            <img class="post_image" src="./posted_images/<?= h($post->post_image); ?>">
                                         </div><!-- post_img_wrap -->
                                     </a>
                                 </div><!-- light-box -->

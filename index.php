@@ -4,20 +4,21 @@ session_start();
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
-if(empty($_SESSION)) {
+if(empty($_SESSION['id'])) {
     header('Location: login.php');
 }
 
 $bbs = new App\Bbs();
 
-if (!empty($_POST)) {
+
+
+if ($_POST['message'] ||
+    $_FILES['image']['name']) {
     $bbs->setPost($_POST, $_SESSION['id']);
 }
 
 $user = $bbs->getUser($_SESSION['id']);
 $posts = $bbs->getPosts();
-
-var_dump($user);
 
 ?>
 
@@ -149,7 +150,7 @@ var_dump($user);
                             <?php if($user->profile) {
                                 echo h($user->profile);
                             } else {
-                                echo 'プロフィールを編集しよう！';
+                                echo 'プロフィールが登録されていません。';
                             } ?>
                         </div>
                     </div>

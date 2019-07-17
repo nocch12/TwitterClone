@@ -6,10 +6,6 @@ require_once('functions.php');
 //ファイル名取得
 $dir = basename($_SERVER['SCRIPT_NAME']);
 
-var_dump($_SESSION);
-var_dump(__DIR__);
-
-
 ?>
 
 <!DOCTYPE html>

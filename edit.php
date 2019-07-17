@@ -4,7 +4,7 @@ session_start();
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
-if(empty($_SESSION)) {
+if(empty($_SESSION['id'])) {
     header('Location: login.php');
 }
 
@@ -74,7 +74,7 @@ $user = $account->getUser();
                             <?php if($user->profile) {
                                 echo h($user->profile);
                             } else {
-                                echo 'プロフィールがありません。';
+                                echo 'プロフィールが登録されていません。';
                             } ?>
                         </div>
                     </div>

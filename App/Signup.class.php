@@ -31,7 +31,7 @@ class Signup {
         $error['password_check'] パスワード入力ミスのエラー
     */
     private function _checkInput() {
-        if(strlen($this->_name) < 4 ||
+        if(mb_strlen($this->_name) > 21 ||
         $this->_name === "") {
             $error['name'] = true;
         }
@@ -121,21 +121,25 @@ class Signup {
     public function accountRegister() {
         $hash = $this->_passwordHash();
 
-        $sql = 'INSERT users(name, email, password, img, created)
-            VALUES (:name, :email, :password, :img, NOW())';
-        $stmt = $this->_db->prepare($sql);
+        try {
+            $sql = 'INSERT users(name, email, password, created)
+                VALUES (:name, :email, :password, NOW())';
+            $stmt = $this->_db->prepare($sql);
+            
+            $stmt->bindvalue(':name', $this->_name, \PDO::PARAM_STR);
+            $stmt->bindvalue(':email', $this->_email, \PDO::PARAM_STR);
+            $stmt->bindvalue(':password', $hash, \PDO::PARAM_STR);
 
-        // bindvalue使った方がいい??
-        $stmt->execute([
-            ':name' => $this->_name,
-            ':email' => $this->_email,
-            ':password' => $hash,
-            ':img' => $img
-        ]);
+            $stmt->execute();
 
-        $_SESSION['completed'] = true;
-        //登録完了画面へ
-        header('Location: ./completed.php');
+            $_SESSION['completed'] = true;
+            //登録完了画面へ
+            header('Location: ./completed.php');
+            exit;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            exit;
+        }
 
     }
 }

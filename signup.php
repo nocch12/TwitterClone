@@ -9,8 +9,6 @@ if (!empty($_POST)) {
     $signup = new App\Signup($_POST['name'], $_POST['email'], $_POST['password'], $_POST['password_check']);
 
     $error = $signup->getErrors();
-
-    var_dump($error);
     
     if (empty($error)) {
         $signup->accountRegister();
@@ -31,7 +29,7 @@ if (!empty($_POST)) {
 
                     <div class="uk-margin">
                     <?php if ($error['name']) : ?>
-                        <p class="error"><?= '* ニックネームを4文字以上で入力してください'; ?></p>
+                        <p class="error"><?= '* ニックネームを20文字以内で入力してください'; ?></p>
                     <?php elseif($error['duplicate']['name']) : ?>
                         <p class="error"><?= '* 既に登録済みのユーザー名です。'; ?></p>
                     <?php endif; ?>
