@@ -74,6 +74,10 @@ class Login {
         $stmt->execute();
         $user = $stmt->fetch();
 
+        var_dump($user);
+        exit;
+        
+
 
         // アカウント情報をセッションに保持
         // メイン画面でログイン情報を使うため
