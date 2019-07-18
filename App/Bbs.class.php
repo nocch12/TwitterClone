@@ -94,10 +94,7 @@ class Bbs {
     private function _validateMessage($msg) {
 
         $pattern="/^(\s|　)+$/";  //正規表現のパターン
-        var_dump(preg_match($pattern, $msg));
-        exit;
 
-        
         // 空白文字のみで画像もなければ処理をせずリダイレクト
         if(preg_match($pattern, $msg) &&
             empty($_FILES['image']['name'])) {
