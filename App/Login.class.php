@@ -67,12 +67,11 @@ class Login {
     // ログイン処理
     public function login() {
 
-        
-        $sql = 'select * from users where email = :email';
+        $sql = 'select * from users where email = ?';
         $stmt = $this->_db->prepare($sql);
-        $stmt->bindvalue(':email', $this->_email, PARAM_STR);
+        // $stmt->bindvalue(':email', $this->_email, PARAM_STR);
         
-        $stmt->execute();
+        $stmt->execute([$this->_email]);
         var_dump($stmt);
         exit;
             $user = $stmt->fetch();
