@@ -69,8 +69,7 @@ class Login {
 
         $sql = 'select * from users where email = :email';
         $stmt = $this->_db->prepare($sql);
-        var_dump($stmt->bindvalue(':email', $this->_email, \PDO::PARAM_STR));
-        exit;
+        $stmt->bindvalue(':email', $this->_email, \PDO::PARAM_STR);
         
         $stmt->execute();
         $user = $stmt->fetch();
