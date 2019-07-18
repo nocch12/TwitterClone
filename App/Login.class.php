@@ -68,12 +68,12 @@ class Login {
     public function login() {
 
         
-        var_dump($this->_email);
-        exit;
+        $sql = 'select * from users where email = :email';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->bindvalue(':email', $this->_email, PARAM_STR);
         
-            $sql = 'select * from users where email = :email';
-            $stmt = $this->_db->prepare($sql);
-            $stmt->bindvalue(':email', $this->_email, PARAM_STR);
+        var_dump($stmt);
+        exit;
             $stmt->execute();
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
