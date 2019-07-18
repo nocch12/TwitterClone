@@ -55,9 +55,6 @@ class Bbs {
         // $idがstring型で来るのでint型にキャスト
         // なくても一応動く
         $id = (int)$id;
-        var_dump($id);
-        exit;
-        
         
         // メッセージの空文字判定
         $msg = $this->_validateMessage($post['message']);
@@ -71,6 +68,10 @@ class Bbs {
         if($_FILES['image']['name']) {
             $this->_imageUpload();
         }
+        
+        var_dump($msg);
+        exit;
+        
 
         // 投稿内容をDBにインサート
         try {
