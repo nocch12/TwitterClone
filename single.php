@@ -4,7 +4,7 @@ session_start();
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
-if(empty($_SESSION['id'])) {
+if(!isset($_SESSION['id'])) {
     header('Location: login.php');
 }
 

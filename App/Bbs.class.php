@@ -55,6 +55,9 @@ class Bbs {
         // $idがstring型で来るのでint型にキャスト
         // なくても一応動く
         $id = (int)$id;
+        var_dump($id);
+        exit;
+        
         
         // メッセージの空文字判定
         $msg = $this->_validateMessage($post['message']);
