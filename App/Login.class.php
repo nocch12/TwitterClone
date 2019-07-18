@@ -66,6 +66,10 @@ class Login {
 
     // ログイン処理
     public function login() {
+
+        
+        var_dump($this->_email);
+        exit;
         
             $sql = 'select * from users where email = :email';
             $stmt = $this->_db->prepare($sql);
@@ -73,10 +77,6 @@ class Login {
             $stmt->execute();
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            
-
-        var_dump($user);
-        exit;
 
             // アカウント情報をセッションに保持
             // メイン画面でログイン情報を使うため
