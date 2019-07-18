@@ -69,9 +69,6 @@ class Bbs {
             $this->_imageUpload();
         }
         
-        var_dump($msg);
-        exit;
-        
 
         // 投稿内容をDBにインサート
         try {
@@ -95,6 +92,10 @@ class Bbs {
     }
 
     private function _validateMessage($msg) {
+        
+        
+        var_dump($msg);
+        exit;
 
         $pattern="^(\s|　)+$";  //正規表現のパターン
 
