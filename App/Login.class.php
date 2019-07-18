@@ -12,6 +12,10 @@ class Login {
         $this->_email = $email;
         $this->_password = $password;
 
+        var_dump($email);
+        exit;
+        
+
         try {
             $this->_db = new \PDO(DSN, DB_USER, DB_PASS);
             $this->_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
