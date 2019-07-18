@@ -72,10 +72,10 @@ class Login {
         $stmt = $this->_db->prepare($sql);
         $stmt->bindvalue(':email', $this->_email, PARAM_STR);
         
+        $stmt->execute();
         var_dump($stmt);
         exit;
-            $stmt->execute();
-            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+            $user = $stmt->fetch();
 
 
             // アカウント情報をセッションに保持
