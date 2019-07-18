@@ -2,9 +2,9 @@
 
 // ini_set('display_errors', 1);
 
-define('DSN', 'mysql:host=localhost;dbname=mybbs;charset=utf8');
-define('DB_USER', 'ohnoman');
-define('DB_PASS', 'ew5KnK64EAqs');
+define('DSN', 'mysql:host=us-cdbr-iron-east-02.cleardb.net;dbname=heroku_4121c3760b2b89d;charset=utf8');
+define('DB_USER', 'bd1d9748156e6f');
+define('DB_PASS', '5dddb06f');
 
 
 define('MAX_FILE_SIZE', 1 * 1024 * 1024);
