@@ -72,10 +72,10 @@ class Login {
         $stmt->bindvalue(':email', $this->_email, \PDO::PARAM_STR);
         
         $stmt->execute();
-        $user = $stmt->fetch();
-
-        var_dump($user);
-        exit;
+        
+                var_dump($stmt);
+                exit;
+        $user = $stmt->fetch(\PDO::HETCH_OBJ);
         
 
 
