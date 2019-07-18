@@ -38,31 +38,36 @@ $dir = basename($_SERVER['SCRIPT_NAME']);
             <div class="uk-navbar-left">
                 <a class="uk-navbar-item uk-logo" href="./">Logo</a>
             </div>
-            
+
+
+            <div class="uk-navbar-right">            
             <!-- 登録画面ではログイン画面へのリンク表示 -->
             <?php if ($dir === 'signup.php') : ?>
-            <div class="uk-navbar-right">
                 <a class="uk-navbar-item uk-button uk-button-primary" href="<?= 'login.php'; ?>">ログイン画面へ</a>
-            </div>
             <?php endif; ?>
 
             
             <!-- ログイン画面では登録画面へのリンク表示 -->
             <?php if ($dir === 'login.php') : ?>
-            <div class="uk-navbar-right">
                 <a class="uk-navbar-item uk-button uk-button-primary" href="<?= 'signup.php'; ?>">新規登録画面へ</a>
-            </div>
             <?php endif; ?>
-
+            
             <?php if ($dir === 'index.php') : ?>
-            <div class="uk-navbar-right">
-                <div class="uk-navbar-item uk-visible@s">
-                    <form action="">
-                        <input class="uk-input uk-form-width-medium" name="search" type="search" placeholder="">
-                        <button class="uk-button uk-button-default">検索</button>
-                    </form>
-                </div>
-
+            <div class="uk-navbar-item uk-visible@s">
+                <form action="">
+                    <input class="uk-input uk-form-width-medium" name="search" type="search" placeholder="">
+                    <button class="uk-button uk-button-default">検索</button>
+                </form>
+            </div>
+            
+                        <!--  -->
+                        <?php 
+                        if ($dir !== 'signup.php' ||
+                            $dir !== 'login.php') :
+                        ?>
+                            <a class="uk-navbar-item uk-button uk-button-danger" href="<?= 'logout.php'; ?>">ログアウト</a>
+                        <?php endif; ?>
+            
                 
                 <!-- スマホ表示時のサイドナビ -->
                 <div class="uk-navbar-item uk-hidden@s">

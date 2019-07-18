@@ -2,6 +2,9 @@
   background-color: #32d296;
   color: #fff!important;
 }
+.uk-button-danger {
+  color: #f8f8f8!important;
+}
 .uk-button-primary:hover, .uk-button-primary:focus {
   background: #15b178;
 }

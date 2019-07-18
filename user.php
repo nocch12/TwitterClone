@@ -80,7 +80,7 @@ $user = $account->getUser();
                         
                         <div class="uk-card-body post_link_wrap">
                             
-                            <a href="post.php?post=<?= h($post->id) ?>" class="post_link"></a>
+                            <a href="post.php?postid=<?= h($post->id) ?>" class="post_link"></a>
 
                                     <div class="post_inner uk-grid-small uk-flex-middle" uk-grid>
                                         <div class="uk-width-auto post_user_img">
