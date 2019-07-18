@@ -96,7 +96,7 @@ class Bbs {
         $pattern="^(\s|　)+$";  //正規表現のパターン
 
         // 空白文字のみで画像もなければ処理をせずリダイレクト
-        if(mb_ereg_match($pattern, $msg) &&
+        if(preg_match($pattern, $msg) &&
             empty($_FILES['image']['name'])) {
                 
                 header('Location: index.php');
