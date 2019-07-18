@@ -69,23 +69,21 @@ class Login {
 
         $sql = 'select * from users where email = ?';
         $stmt = $this->_db->prepare($sql);
-        // $stmt->bindvalue(':email', $this->_email, PARAM_STR);
+        $stmt->bindvalue(':email', $this->_email, \PDO::PARAM_STR);
         
-        $stmt->execute([$this->_email]);
-        var_dump($stmt);
-        exit;
-            $user = $stmt->fetch();
+        $stmt->execute();
+        $user = $stmt->fetch();
 
 
-            // アカウント情報をセッションに保持
-            // メイン画面でログイン情報を使うため
-            if($user) {
-            $_SESSION['id'] = $user['id'];
-            $_SESSION['name'] = $user['name'];
-            $_SESSION['time'] = time();
-            
-            // メイン画面へ
-            header('Location: index.php');
-            }
+        // アカウント情報をセッションに保持
+        // メイン画面でログイン情報を使うため
+        if($user) {
+        $_SESSION['id'] = $user['id'];
+        $_SESSION['name'] = $user['name'];
+        $_SESSION['time'] = time();
+        
+        // メイン画面へ
+        header('Location: index.php');
+        }
     }
 }
