@@ -69,7 +69,7 @@ $posts = $bbs->getPosts();
                                         </div><!-- post_user_img -->
 
                                         <div class="uk-width-expand post_user_name">
-                                            <a href="user.php?user=<?= h($post->name) ?>" class="uk-text-success uk-margin-remove-bottom user_name"><?= h($post->name); ?></a>
+                                            <a href="./user.php?user=<?= h($post->name) ?>" class="uk-text-success uk-margin-remove-bottom user_name"><?= h($post->name); ?></a>
                                             <!-- user_name -->
 
                                             <p class="uk-text-meta uk-margin-remove-top posted_time"><time
@@ -145,7 +145,7 @@ $posts = $bbs->getPosts();
                             </div>
                         </div>
                         <div class="uk-card-header">
-                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href="user.php?user=<?= $user->name ?>"><?= h($user->name); ?></a></h3>
+                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href="./user.php?user=<?= $user->name ?>"><?= h($user->name); ?></a></h3>
                         </div>
                         <div class="uk-card-body">
                             <?php if($user->profile) {

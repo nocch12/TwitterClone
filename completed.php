@@ -25,7 +25,7 @@
 
                     <div class="uk-margin">
                         <div class="uk-inline uk-width-2-3">
-                            <a href="login.php" class="uk-button uk-button-primary">ログイン画面へ</a>
+                            <a href="./login.php" class="uk-button uk-button-primary">ログイン画面へ</a>
                         </div>
                     </div>
 
