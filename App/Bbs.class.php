@@ -109,9 +109,6 @@ class Bbs {
     }
 
     private function _validateToken() {
-        
-        var_dump($_POST);
-        exit;
         if (
             !isset($_SESSION['token']) ||
             !isset($_POST['token']) ||
