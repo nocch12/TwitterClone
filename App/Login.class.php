@@ -12,10 +12,6 @@ class Login {
         $this->_email = $email;
         $this->_password = $password;
 
-        var_dump($email);
-        exit;
-        
-
         try {
             $this->_db = new \PDO(DSN, DB_USER, DB_PASS);
             $this->_db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -71,10 +67,16 @@ class Login {
     // ログイン処理
     public function login() {
         
-            $sql = 'select * from users where email = ?';
+            $sql = 'select * from users where email = :email';
             $stmt = $this->_db->prepare($sql);
-            $stmt->execute([$this->_email]);
+            $stmt->bindvalue(':email', $this->_email, PARAM_STR);
+            $stmt->execute();
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            
+
+        var_dump($user);
+        exit;
 
             // アカウント情報をセッションに保持
             // メイン画面でログイン情報を使うため
