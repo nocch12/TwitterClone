@@ -82,6 +82,8 @@ class Login {
         $_SESSION['name'] = $user->name;
         $_SESSION['time'] = time();
         
+        var_dump($_SESSION);
+        exit;
         // メイン画面へ
         header('Location: index.php');
         }
