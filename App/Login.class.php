@@ -74,16 +74,12 @@ class Login {
         $stmt->execute();
         
         $user = $stmt->fetch(\PDO::FETCH_OBJ);
-        var_dump($user);
-        exit;
-        
-
 
         // アカウント情報をセッションに保持
         // メイン画面でログイン情報を使うため
         if($user) {
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['name'] = $user['name'];
+        $_SESSION['id'] = $user->id;
+        $_SESSION['name'] = $user->name;
         $_SESSION['time'] = time();
         
         // メイン画面へ
