@@ -67,7 +67,7 @@ class Login {
     // ログイン処理
     public function login() {
 
-        $sql = 'select * from users where email = ?';
+        $sql = 'select * from users where email = :email';
         $stmt = $this->_db->prepare($sql);
         var_dump($stmt->bindvalue(':email', $this->_email, \PDO::PARAM_STR));
         exit;
