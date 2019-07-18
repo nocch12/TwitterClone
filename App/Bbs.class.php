@@ -92,10 +92,6 @@ class Bbs {
     }
 
     private function _validateMessage($msg) {
-        
-        
-        var_dump($msg);
-        exit;
 
         $pattern="^(\s|　)+$";  //正規表現のパターン
 
@@ -113,6 +109,9 @@ class Bbs {
     }
 
     private function _validateToken() {
+        
+        var_dump($_POST);
+        exit;
         if (
             !isset($_SESSION['token']) ||
             !isset($_POST['token']) ||
