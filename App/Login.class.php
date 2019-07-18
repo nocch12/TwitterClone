@@ -73,7 +73,7 @@ class Login {
         
         $stmt->execute();
         
-        $user = $stmt->fetch(\PDO::HETCH_OBJ);
+        $user = $stmt->fetch(\PDO::FETCH_OBJ);
         var_dump($user);
         exit;
         
