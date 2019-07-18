@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+echo 'hello!';
+exit;
+
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
