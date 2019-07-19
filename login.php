@@ -1,8 +1,6 @@
 <?php
 session_start();
 
-phpinfo();
-
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
