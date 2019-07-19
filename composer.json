@@ -6,5 +6,7 @@
             "email": "k.ohno12.gt@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-exif": "*"
+    }
 }
