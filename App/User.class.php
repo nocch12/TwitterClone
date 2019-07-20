@@ -59,11 +59,12 @@ class User {
         return $posts;
     }
     
-    public function setProfile($prof) {
+    public function setProfile($prof, $s3, $bucket_name) {
 
         if($_FILES['image']['name']) {
             $this->_uploadProfileImage();
             $this->_updateProfileImage();
+            // $this->_upToAwsProfileImage($s3, $bucket_name);
         }
 
         if(isset($prof['profile'])) {
@@ -132,8 +133,22 @@ class User {
         
     }
 
-        private function _saveAws() {
-            
+        private function _upToAwsProfileImage($s3, $bucket_name) {
+            $params = [
+                'Bucket' => $bucket_name,
+                'Key' => 'user_images/sample.jpg',
+                'SourceFile'   => './upload/path.jpg',
+            ];
+
+            try
+            {
+                $result = $s3 -> putObject($params);
+                var_dump($result['ObjectURL']);
+            }
+            catch(S3Exception $e)
+            {
+                var_dump($e -> getMessage());
+            }
         }
 
 

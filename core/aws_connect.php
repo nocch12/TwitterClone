@@ -11,7 +11,7 @@ $credentials = [
 
 $bucket_version = 'latest';
 $bucket_region = 'ap-northeast-1';
-$bucket_name = '*** bucket name ***';
+$bucket_name = 't-clone-app';
 
 
 $s3 = new S3Client([
