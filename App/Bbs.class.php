@@ -144,8 +144,6 @@ class Bbs {
         // ファイルネームがある（何かしら送信されている）なら
         // 画像アップロード処理
         if($_FILES['image']['name']) {
-            var_dump($_FILES['image']);
-            exit;
             $this->_imageUpload($s3, $bucket_name);
         }
         
@@ -209,6 +207,9 @@ class Bbs {
 
             // 一時フォルダから本番フォルダに保存処理
             $this->_save($ext);
+
+            var_dump($this->_imageFileName);
+            exit;
 
             $this->_uploadImageToAWS($s3, $bucket_name);
             
