@@ -219,16 +219,13 @@ class Bbs {
     private function _uploadImageToAWS($s3, $bucket_name) {
         $params = [
             'Bucket' => $bucket_name,
-            'Key' => 'post_images/' . $this->_imageFileName,
+            'Key' => 'posted_images/' . $this->_imageFileName,
             'SourceFile'   => __DIR__ . '/../posted_images/' . $this->_imageFileName,
         ];
 
         try
         {
             $result = $s3 -> putObject($params);
-            var_dump($result);
-            exit;
-            
         }
         catch(S3Exception $e)
         {
