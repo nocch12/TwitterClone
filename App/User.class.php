@@ -120,6 +120,8 @@ class User {
             $ext = $this->_validateImageType();
 
             $this->_save($ext);
+
+            $this->saveAws();
             
             $_SESSION['success'] = 'Upload Done!';
         } catch (\Exception $e) {
@@ -129,6 +131,10 @@ class User {
 
         
     }
+
+        private function _saveAws() {
+            
+        }
 
 
         private function _save($ext) {
