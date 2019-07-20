@@ -220,7 +220,7 @@ class Bbs {
         $params = [
             'Bucket' => $bucket_name,
             'Key' => 'post_images/' . $this->_imageFileName,
-            'SourceFile'   => __DIR__ . '/../post_images/' . $this->_imageFileName,
+            'SourceFile'   => __DIR__ . '/../posted_images/' . $this->_imageFileName,
         ];
 
         try
