@@ -226,6 +226,9 @@ class Bbs {
         try
         {
             $result = $s3 -> putObject($params);
+            var_dump($result);
+            exit;
+            
         }
         catch(S3Exception $e)
         {
