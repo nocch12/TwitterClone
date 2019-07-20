@@ -4,7 +4,7 @@ session_start();
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
-require '../../vendor/autoload.php';
+require '../vendor/autoload.php';
 
 use Aws\S3\S3Client;
 use Aws\CommandPool;
