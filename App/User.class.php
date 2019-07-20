@@ -135,7 +135,7 @@ class User {
             $params = [
                 'Bucket' => $bucket_name,
                 'Key' => 'user_images/' . $this->_imageFileName,
-                'SourceFile'   => __DIR__ . '/user_images/' . $this->imageFileName,
+                'SourceFile'   => __DIR__ . '/../user_images/' . $this->_imageFileName,
             ];
 
             try
