@@ -30,14 +30,14 @@ class User {
     }
 
     // ユーザー情報を取得
-    public function getUser() {
+    public function getUser($s3, $bucket_name) {
         
         $stmt = $this->_db->prepare('SELECT name, profile, image FROM users WHERE name=?');
 		$stmt->execute([$this->_user_name]);
         $user = $stmt->fetch(\PDO::FETCH_OBJ);
 
         if($user->image) {
-            $this->_getProfileImage($user->image);
+            $this->_getProfileImage($user->image, $s3, $bucket_name);
         }
 
         return $user;
@@ -80,7 +80,7 @@ class User {
         
     }
 
-    private function _getProfileImage($imageName) {
+    private function _getProfileImage($imageName, $s3, $bucket_name) {
         if (\file_exists(__DIR__ . '/../user_images' . $imageName)) {
             return;
         }

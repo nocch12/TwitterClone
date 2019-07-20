@@ -17,7 +17,7 @@ if ($prof ||
     $account->setProfile($prof, $s3, $bucket_name);
 }
 
-$user = $account->getUser();
+$user = $account->getUser($s3, $bucket_name);
 
 
 ?>
