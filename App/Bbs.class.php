@@ -144,6 +144,9 @@ class Bbs {
         // ファイルネームがある（何かしら送信されている）なら
         // 画像アップロード処理
         if($_FILES['image']['name']) {
+            var_dump($_FILES['image']);
+            exit;
+            
             $this->_imageUpload($s3, $bucket_name);
         }
         
