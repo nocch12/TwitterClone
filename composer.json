@@ -8,14 +8,8 @@
         }
     ],
     "require": {
-<<<<<<< HEAD
         "ext-exif": "*",
         "ext-mbstring": "*",
         "aws/aws-sdk-php": "^3.107"
     }
 }
-=======
-        "ext-exif": "*"
-    }
-}
->>>>>>> acb516345c02255ed1eb1b784cc64b41669bc051
