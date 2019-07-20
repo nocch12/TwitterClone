@@ -33,13 +33,38 @@ class Bbs {
     }
 
     // ユーザー情報を取得
-    public function getUser($id) {
+    public function getUser($id, $s3, $bucket_name) {
         
         $stmt = $this->_db->prepare('SELECT name, profile, image FROM users WHERE id=?');
 		$stmt->execute([$id]);
         $user = $stmt->fetch(\PDO::FETCH_OBJ);
 
+        if($user->image) {
+            $this->_getProfileImage($user->image, $s3, $bucket_name);
+        }
+
         return $user;
+    }
+    
+    private function _getProfileImage($imageName, $s3, $bucket_name) {
+        if (!\file_exists(__DIR__ . '/../user_images' . $imageName)) {
+        
+
+            $params = [
+                'Bucket' => $bucket_name,
+                'Key' => 'user_images/' . $imageName,
+                'SaveAs' => __DIR__ . '/../user_images/' . $imageName,
+            ];
+
+            try
+            {
+                $result = $s3->getObject($params);
+            }
+            catch(S3Exception $e)
+            {
+                var_dump($e -> getMessage());
+            }   
+        }
     }
 
     // 記事一覧を取得
