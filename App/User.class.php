@@ -81,36 +81,24 @@ class User {
     }
 
     private function _getProfileImage($imageName, $s3, $bucket_name) {
-        if (\file_exists(__DIR__ . '/../user_images' . $imageName)) {
-            return;
+        if (!\file_exists(__DIR__ . '/../user_images' . $imageName)) {
+        
+
+            $params = [
+                'Bucket' => $bucket_name,
+                'Key' => 'user_images/' . $imageName,
+                'SaveAs' => __DIR__ . '/../user_images/' . $imageName,
+            ];
+
+            try
+            {
+                $result = $s3->getObject($params);
+            }
+            catch(S3Exception $e)
+            {
+                var_dump($e -> getMessage());
+            }   
         }
-
-        $params = [
-            'Bucket' => $bucket_name,
-            'Key' => 'user_images/' . $imageName,
-            'SaveAs' => __DIR__ . '/../user_images/' . $imageName,
-        ];
-
-        try
-        {
-            $result = $s3->getObject($params);
-
-            $len = $result['ContentLength'];
-
-            //ファイルを表示
-            header("Content-Type: {$result['ContentType']}");
-            echo $result['Body'];
-
-            //ファイルダウンロード
-            header('Content-Type: application/force-download;');
-            header('Content-Length: '.$len);
-            header('Content-Disposition: attachment; filename="sample.jpg"');
-            echo $result['Body'];
-        }
-        catch(S3Exception $e)
-        {
-            var_dump($e -> getMessage());
-        }   
     }
 
     private function _updateProfile($profile) {
