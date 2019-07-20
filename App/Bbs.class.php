@@ -38,11 +38,8 @@ class Bbs {
         $stmt = $this->_db->prepare('SELECT name, profile, image FROM users WHERE id=?');
 		$stmt->execute([$id]);
         $user = $stmt->fetch(\PDO::FETCH_OBJ);
-
-        var_dump($user->image);
-        exit;
         
-        if($user->image) {
+        if(empty($user->image)) {
             $this->_getProfileImage($user->image, $s3, $bucket_name);
         }
 
