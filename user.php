@@ -4,29 +4,8 @@ session_start();
 require_once(__DIR__ . '/core/config.php');
 require_once(__DIR__ . '/functions.php');
 
-require 'vendor/autoload.php';
-
-use Aws\S3\S3Client;
-use Aws\CommandPool;
-$credentials = [
-    'key' => 'AKIAY4ETYZVKEYVK75UD',
-    'secret' => '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',
-];
-
-$bucket_version = 'latest';
-$bucket_region = 'ap-northeast-1';
-$bucket_name = '*** bucket name ***';
-
-
-$s3 = new S3Client([
-    'credentials' => $credentials,
-    'region'  => $bucket_region,
-    'version' => $bucket_version,
-]);
-
 var_dump($s3);
 exit;
-
 
 if(!isset($_SESSION['id'])) {
     header('Location: login.php');
