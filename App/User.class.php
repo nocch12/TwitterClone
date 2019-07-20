@@ -64,9 +64,6 @@ class User {
         if($_FILES['image']['name']) {
             $this->_uploadProfileImage();
             $this->_updateProfileImage();
-
-            var_dump($this->_imageFileName);
-            exit;
             $this->_upToAwsProfileImage($s3, $bucket_name);
         }
 
