@@ -208,9 +208,6 @@ class Bbs {
             // 一時フォルダから本番フォルダに保存処理
             $this->_save($ext);
 
-            var_dump($this->_imageFileName);
-            exit;
-
             $this->_uploadImageToAWS($s3, $bucket_name);
             
         } catch (\Exception $e) {
