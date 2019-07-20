@@ -21,7 +21,7 @@ if (!empty($_POST)) {
 
     <section id="body">
         <div>
-            <div class="uk-card uk-card-default uk-card-body uk-width-2-3 align-center up-form margin-center mt">
+            <div class="uk-card uk-card-default uk-card-body uk-width-5-6 uk-width-2-3@s uk-padding@s align-center up-form margin-center mt">
                 <h3 class="uk-card-title">Log In</h3>
                 <form action="" method="post">
 
@@ -29,7 +29,7 @@ if (!empty($_POST)) {
                         <?php if ($error['email']) : ?>
                         <p class="error"><?= '* 存在しないアカウントです。'; ?></p>
                         <?php endif; ?>
-                        <div class="uk-inline uk-width-2-3">
+                        <div class="uk-inline uk-width-5-6">
                             <span class="uk-form-icon" uk-icon="icon: mail"></span>
                             <input class="uk-input" type="email" name="email" placeholder="メールアドレス" value="<?= h($_POST['email']); ?>">
                         </div>
@@ -39,7 +39,7 @@ if (!empty($_POST)) {
                         <?php if ($error['password']) : ?>
                         <p class="error"><?= '* ログインに失敗しました'; ?></p>
                         <?php endif; ?>
-                        <div class="uk-inline uk-width-2-3">
+                        <div class="uk-inline uk-width-5-6">
                             <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: lock"></span>
                             <input class="uk-input" type="password" name="password" placeholder="パスワード">
                         </div>
