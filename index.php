@@ -16,7 +16,7 @@ $bbs = new App\Bbs();
 // messageかファイルアップロードがあれば投稿処理開始
 if ($_POST['message'] ||
     $_FILES['image']['name']) {
-    $bbs->setPost($_POST, $_SESSION['id']);
+    $bbs->setPost($_POST, $_SESSION['id'], $s3, $bucket_name);
 }
 
 $user = $bbs->getUser($_SESSION['id'], $s3, $bucket_name);
