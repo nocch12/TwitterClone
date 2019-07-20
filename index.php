@@ -20,7 +20,7 @@ if ($_POST['message'] ||
 }
 
 $user = $bbs->getUser($_SESSION['id'], $s3, $bucket_name);
-$posts = $bbs->getPosts();
+$posts = $bbs->getPosts($s3, $bucket_name);
 
 ?>
 

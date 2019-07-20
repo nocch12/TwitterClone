@@ -68,15 +68,68 @@ class Bbs {
     }
 
     // 記事一覧を取得
-    public function getPosts() {
+    public function getPosts($s3, $bucket_name) {
         $stmt = $this->_db->query('SELECT u.name, u.image, p.* FROM users u, posts p WHERE u.id=p.user_id ORDER BY p.created DESC');
         
         $posts = $stmt->fetchAll(\PDO::FETCH_OBJ); 
+
+        foreach ($posts as $post) {
+            if($post->image) {
+                $this->_getPostUserImage($post->image, $s3, $bucket_name);
+            }
+            if($post->post_image) {
+                $this->_getPostImage($post->post_image, $s3, $bucket_name);
+            }
+        }
+        
         return $posts;
     }
 
+
+    // AWS s3から画像を取得
+    private function _getPostUserImage($imageName, $s3, $bucket_name) {
+        // ユーザーイメージが保存されていなければ取得する処理
+        if (!\file_exists(__DIR__ . '/../user_images' . $imageName)) {
+            $params = [
+                'Bucket' => $bucket_name,
+                'Key' => 'user_images/' . $imageName,
+                'SaveAs' => __DIR__ . '/../user_images/' . $imageName,
+            ];
+
+            try
+            {
+                $s3->getObject($params);
+            }
+            catch(S3Exception $e)
+            {
+                var_dump($e -> getMessage());
+            }   
+        }
+    }
+
+    // AWS s3から画像を取得
+    private function _getPostImage($imageName, $s3, $bucket_name) {
+        // 投稿画像が保存されていなければ取得する処理
+        if (!\file_exists(__DIR__ . '/../posted_images' . $imageName)) {
+            $params = [
+                'Bucket' => $bucket_name,
+                'Key' => 'posted_images/' . $imageName,
+                'SaveAs' => __DIR__ . '/../posted_images/' . $imageName,
+            ];
+
+            try
+            {
+                $s3->getObject($params);
+            }
+            catch(S3Exception $e)
+            {
+                var_dump($e -> getMessage());
+            }   
+        }
+    }
+
     // 記事投稿処理
-    public function setPost($post, $id) {
+    public function setPost($post, $id, $s3, $bucket_name) {
         // $idがstring型で来るのでint型にキャスト
         // なくても一応動く
         $id = (int)$id;
@@ -91,7 +144,7 @@ class Bbs {
         // ファイルネームがある（何かしら送信されている）なら
         // 画像アップロード処理
         if($_FILES['image']['name']) {
-            $this->_imageUpload();
+            $this->_imageUpload($s3, $bucket_name);
         }
         
 
@@ -143,7 +196,7 @@ class Bbs {
         }
     }
 
-    private function _imageUpload() {
+    private function _imageUpload($s3, $bucket_name) {
         try {
             // ファイルが正しくアップロードされているか
             $this->_validateUpload();
@@ -154,11 +207,31 @@ class Bbs {
 
             // 一時フォルダから本番フォルダに保存処理
             $this->_save($ext);
+
+            $this->_uploadImageToAWS($s3, $bucket_name);
             
         } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
             // exit;
         }
+    }
+
+    private function _uploadImageToAWS($s3, $bucket_name) {
+        $params = [
+            'Bucket' => $bucket_name,
+            'Key' => 'post_images/' . $this->_imageFileName,
+            'SourceFile'   => __DIR__ . '/../post_images/' . $this->_imageFileName,
+        ];
+
+        try
+        {
+            $result = $s3 -> putObject($params);
+        }
+        catch(S3Exception $e)
+        {
+            var_dump($e -> getMessage());
+        }
+        
     }
 
     private function _save($ext) {

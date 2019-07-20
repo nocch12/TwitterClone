@@ -166,7 +166,6 @@ class User {
             try
             {
                 $result = $s3 -> putObject($params);
-                var_dump($result['ObjectURL']);
             }
             catch(S3Exception $e)
             {
