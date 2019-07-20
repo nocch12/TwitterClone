@@ -146,7 +146,6 @@ class Bbs {
         if($_FILES['image']['name']) {
             var_dump($_FILES['image']);
             exit;
-            
             $this->_imageUpload($s3, $bucket_name);
         }
         
