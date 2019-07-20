@@ -64,7 +64,10 @@ class User {
         if($_FILES['image']['name']) {
             $this->_uploadProfileImage();
             $this->_updateProfileImage();
-            // $this->_upToAwsProfileImage($s3, $bucket_name);
+
+            var_dump($this->_imageFileName);
+            exit;
+            $this->_upToAwsProfileImage($s3, $bucket_name);
         }
 
         if(isset($prof['profile'])) {
@@ -121,7 +124,7 @@ class User {
             $ext = $this->_validateImageType();
 
             $this->_save($ext);
-            
+
             $_SESSION['success'] = 'Upload Done!';
         } catch (\Exception $e) {
             $_SESSION['error'] = $e->getMessage();
@@ -134,8 +137,8 @@ class User {
         private function _upToAwsProfileImage($s3, $bucket_name) {
             $params = [
                 'Bucket' => $bucket_name,
-                'Key' => 'user_images/sample.jpg',
-                'SourceFile'   => './upload/path.jpg',
+                'Key' => 'user_images/' . $this->_imageFileName,
+                'SourceFile'   => __DIR__ . '/user_images/' . $this->imageFileName,
             ];
 
             try

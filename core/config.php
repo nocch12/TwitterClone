@@ -1,6 +1,6 @@
 <?php
 
-// ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 
 define('DSN', 'mysql:host=us-cdbr-iron-east-02.cleardb.net;dbname=heroku_4121c3760b2b89d;charset=utf8');
 define('DB_USER', 'bd1d9748156e6f');
