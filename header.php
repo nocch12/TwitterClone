@@ -79,6 +79,26 @@ $dir = basename($_SERVER['SCRIPT_NAME']);
 
                             <button class="uk-offcanvas-close" type="button" uk-close></button>
 
+                            <div class="uk-padding-small align-center">
+                                <div uk-lightbox>
+                                    <a href="<?php
+                                    if (empty($user->image)) {
+                                        echo "./assets/images/noicon.jpg";
+                                    } else {
+                                        echo "./user_images/" . $user->image;
+                                    }
+                                    ?>" data-alt="Image">
+                                        <img class="uk-border-circle image_circle80" width="80" height="80" src="<?php
+                                    if (empty($user->image)) {
+                                        echo "./assets/images/noicon.jpg";
+                                    } else {
+                                        echo "./user_images/" . $user->image;
+                                    }
+                                    ?>">
+                                    </a>
+                                </div>
+                            </div>
+
                             <h3><?= h($user->name); ?></h3>
 
                             <p><?= h($user->profile); ?></p>
