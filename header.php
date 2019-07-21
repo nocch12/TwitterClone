@@ -72,22 +72,16 @@ $dir = basename($_SERVER['SCRIPT_NAME']);
                 <!-- スマホ表示時のサイドナビ -->
                 <div class="uk-navbar-item uk-hidden@s">
                     <button class="uk-button uk-button-default" type="button"
-                        uk-toggle="target: #offcanvas-flip">Open</button>
+                        uk-icon="menu" uk-toggle="target: #offcanvas-flip"></button>
 
                     <div id="offcanvas-flip" uk-offcanvas="flip: true; overlay: true">
                         <div class="uk-offcanvas-bar">
 
                             <button class="uk-offcanvas-close" type="button" uk-close></button>
 
-                            <h3>Title</h3>
+                            <h3><?= h($user->name); ?></h3>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                incididunt
-                                ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                                nisi ut
-                                aliquip ex ea
-                                commodo consequat.</p>
+                            <p><?= h($user->profile); ?></p>
 
                         <!-- ログアウトボタン  -->
                         <?php 
