@@ -21,6 +21,9 @@ article .uk-card-body {
 .uk-border-circle {
   box-shadow: 0 0 5px 1px #cccccc6e;
 }
+.uk-offcanvas-bar {
+  background: #fff;
+}
 
 .align-center {
   text-align: center;
