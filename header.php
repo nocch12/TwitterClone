@@ -60,12 +60,12 @@ $dir = basename($_SERVER['SCRIPT_NAME']);
                 </form>
             </div>
             
-                        <!--  -->
+                        <!-- ログアウトボタン  -->
                         <?php 
                         if ($dir !== 'signup.php' ||
                             $dir !== 'login.php') :
                         ?>
-                            <a class="uk-navbar-item uk-button uk-button-danger" href="<?= 'logout.php'; ?>">ログアウト</a>
+                            <a class="uk-navbar-item uk-button uk-button-danger uk-visible@s" href="<?= 'logout.php'; ?>">ログアウト</a>
                         <?php endif; ?>
             
                 
@@ -89,6 +89,13 @@ $dir = basename($_SERVER['SCRIPT_NAME']);
                                 aliquip ex ea
                                 commodo consequat.</p>
 
+                        <!-- ログアウトボタン  -->
+                        <?php 
+                        if ($dir !== 'signup.php' ||
+                            $dir !== 'login.php') :
+                        ?>
+                            <a class="uk-navbar-item uk-button uk-button-danger" href="<?= 'logout.php'; ?>">ログアウト</a>
+                        <?php endif; ?>
                         </div>
                     </div>
                 </div>
