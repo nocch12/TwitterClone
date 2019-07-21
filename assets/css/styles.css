@@ -25,6 +25,9 @@ article .uk-card-body {
   color: #666;
   background: #fff;
 }
+.uk-offcanvas-bar .uk-close:hover {
+  color: rgba(#666, 0.7);
+}
 .uk-offcanvas-bar h3 {
   color: #666;
 }
