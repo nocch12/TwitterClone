@@ -23,7 +23,7 @@ class Single {
     }
 
     // ユーザー情報を取得
-    public function getMainPost() {
+    public function getMainPost($s3, $bucket_name) {
         $sql = 
         'SELECT u.name, u.profile, u.image, p.*
         FROM users u, posts p 
@@ -34,8 +34,30 @@ class Single {
         $stmt->bindvalue(':post_id', $this->_post_id, \PDO::PARAM_INT);
 		$stmt->execute();
         $post = $stmt->fetch(\PDO::FETCH_OBJ);
-        
+
         return $post;
+    }
+
+    
+    // AWS s3から画像を取得
+    private function _getPostImage($imageName, $s3, $bucket_name) {
+        // 投稿画像が保存されていなければ取得する処理
+        if (!\file_exists(__DIR__ . '/../posted_images' . $imageName)) {
+            $params = [
+                'Bucket' => $bucket_name,
+                'Key' => 'posted_images/' . $imageName,
+                'SaveAs' => __DIR__ . '/../posted_images/' . $imageName,
+            ];
+
+            try
+            {
+                $s3->getObject($params);
+            }
+            catch(S3Exception $e)
+            {
+                var_dump($e -> getMessage());
+            }   
+        }
     }
 
     // 表示中ユーザーの記事一覧を取得

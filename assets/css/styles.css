@@ -140,3 +140,6 @@ article .uk-card-body {
   right: 2%;
   bottom: 2%;
 }
+.single_main_post {
+  display: flex;
+}

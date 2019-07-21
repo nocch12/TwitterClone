@@ -2,6 +2,7 @@
 session_start();
 
 require_once(__DIR__ . '/core/config.php');
+require_once(__DIR__ . '/core/aws_connect.php');
 require_once(__DIR__ . '/functions.php');
 
 if(!isset($_SESSION['id'])) {
@@ -10,7 +11,7 @@ if(!isset($_SESSION['id'])) {
 
 $single = new App\Single();
 
-$main = $single->getMainPost();
+$main = $single->getMainPost($s3, $bucket_name);
 
 
 // $posts = $single->getResPosts();
@@ -45,12 +46,34 @@ $main = $single->getMainPost();
                                 </a>
                             </div>
                         </div>
+
                         <div class="uk-card-header">
-                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href=""><?= h($main->name); ?></a></h3>
+                            <h3 class="uk-card-title align-center"><a class="uk-link-text" href="./user.php?user=<?= h($main->name); ?>"><?= h($main->name); ?></a></h3>
                         </div>
-                        <div class="uk-card-body">
-                            <?= h($main->message); ?>
-                        </div>
+                        <div class="uk-card uk-card-default uk-grid-collapse uk-child-width-expand" 
+                        uk-grid>
+                        
+                            <div class="uk-card-body post_link_wrap">
+
+                                    <div class="card_message">
+                                    <p><?= h($main->message); ?></p>
+                                    </div>
+                                </div><!-- uk-card-body -->
+
+                                <?php if($main->post_image) : ?>
+                                <div class="uk-card-media-right uk-cover-container uk-width-1-3" uk-lightbox>
+                                    <a href="./posted_images/<?= h($main->post_image); ?>" data-alt="Image">
+                                        <div class="post_image_wrap">
+                                            <img class="post_image" src="./posted_images/<?= h($main->post_image); ?>">
+                                        </div><!-- post_img_wrap -->
+                                    </a>
+                                </div><!-- light-box -->
+                                <?php endif; ?>
+
+                            </div>
+                        </div><!-- uk-card -->
+
+                        
                     </div>
                 </div><!-- profile -->
 
