@@ -69,7 +69,19 @@ class Bbs {
 
     // 記事一覧を取得
     public function getPosts($s3, $bucket_name) {
-        $stmt = $this->_db->query('SELECT u.name, u.image, p.* FROM users u, posts p WHERE u.id=p.user_id ORDER BY p.created DESC');
+        if ($_REQUEST['search']) {
+            $word = '%' . $_REQUEST['search'] . '%';
+            
+            $sql = 'SELECT u.name, u.image, p.* FROM users u, posts p WHERE u.id=p.user_id AND (u.name LIKE :word OR p.message LIKE :word) ORDER BY p.created DESC';
+
+            $stmt = $this->_db->prepare($sql);
+            $stmt->bindvalue(':word', $word, \PDO::PARAM_STR);
+            $stmt->execute();
+            
+        } else {
+            $sql = 'SELECT u.name, u.image, p.* FROM users u, posts p WHERE u.id=p.user_id ORDER BY p.created DESC';
+            $stmt = $this->_db->query($sql);
+        }
         
         $posts = $stmt->fetchAll(\PDO::FETCH_OBJ); 
 

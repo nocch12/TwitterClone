@@ -162,8 +162,9 @@ $posts = $bbs->getPosts($s3, $bucket_name);
         </div>
     </section>
 
-    <a id="to_top" href="#" uk-totop uk-scroll></a>
-
+    <div class="to_top_wrap">
+        <a id="to_top" href="#" uk-totop uk-scroll></a>
+    </div>
 </body>
 
 </html>

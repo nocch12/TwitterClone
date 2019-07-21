@@ -135,3 +135,8 @@ article .uk-card-body {
   height: 80px!important;
   object-fit: cover;
 }
+.to_top_wrap {
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+}
