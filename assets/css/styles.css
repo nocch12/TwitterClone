@@ -25,6 +25,9 @@ article .uk-card-body {
   color: #666;
   background: #fff;
 }
+.uk-offcanvas-bar h3 {
+  color: #666;
+}
 
 .align-center {
   text-align: center;
