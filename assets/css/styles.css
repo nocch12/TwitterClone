@@ -21,7 +21,7 @@ article .uk-card-body {
 .uk-border-circle {
   box-shadow: 0 0 5px 1px #cccccc6e;
 }
-.uk-offcanvas-bar, .uk-close {
+.uk-offcanvas-bar, .uk-offcanvas-bar .uk-close {
   color: #666;
   background: #fff;
 }
