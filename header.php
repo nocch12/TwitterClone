@@ -15,7 +15,7 @@ $dir = basename($_SERVER['SCRIPT_NAME']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Twitter Clone</title>
 
     <!-- 登録完了画面からログイン画面へ自動遷移 -->
     <?php if($dir === 'completed.php') : ?>
