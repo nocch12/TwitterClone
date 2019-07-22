@@ -1,6 +1,7 @@
 {
     'use strict';
 
+    // textareaの高さを可変にする
     $(function () {
 
         $("#ta").height(28);//init
@@ -19,6 +20,32 @@
                     }
                 }
             }
+        });
+    });
+
+
+    $(function () {
+        let $goodBtn = $('.good_btn');
+        let cancelFlg = 0;
+
+        $goodBtn.on('click', function () {
+            if (cancelFlg === 0) {
+                cancelFlag = 1;
+                let $this = $(this);
+                let $postId = $(this).data('id');
+
+                $.post("_ajaxGood.php", { postId: $postId }, function (res) {
+                    console.log(res);
+                    $this.toggleClass('active');
+                }).fail(function () {
+                    console.log('err');
+                });
+
+
+                setTimeout(function () {
+                    cancelFlag = 0;
+                }, 10000);
+            };
         });
     });
 

@@ -5,11 +5,13 @@ namespace App;
 class Single {
     private $_db;
     private $_post_id;
+    private $_user_id;
     private $_user_name;
     
     public function __construct() {
 
         $this->_post_id = (int)$_GET['postid'];
+        $this->_user_id = (int)$_SESSION['id'];
 
         // データベースに接続
         try {
@@ -93,6 +95,24 @@ class Single {
         
         header('Location: user.php');
         exit;
+    }
+
+    public function isGood() {
+        $sql = 'SELECT * FROM good WHERE post_id = :p_id AND user_id = :u_id';
+        $stmt = $this->_db->prepare($sql);
+        $stmt->bindvalue(':p_id', $this->_post_id, \PDO::PARAM_INT);
+        $stmt->bindvalue(':u_id', $this->_user_id, \PDO::PARAM_INT);
         
+        $stmt->execute();
+
+        $count = $stmt->rowCount();
+
+        if ($count > 0) {
+            
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

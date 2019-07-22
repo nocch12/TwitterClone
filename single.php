@@ -13,6 +13,7 @@ $single = new App\Single();
 
 $main = $single->getMainPost($s3, $bucket_name);
 
+$isGood = $single->isGood();
 
 // $posts = $single->getResPosts();
 
@@ -36,7 +37,8 @@ $main = $single->getMainPost($s3, $bucket_name);
                                     echo "./user_images/" . $main->image;
                                 }
                                 ?>" data-alt="Image">
-                                    <img class="uk-border-circle image_circle80" width="80" height="80" src="<?php
+       
+       <img class="uk-border-circle image_circle80" width="80" height="80" src="<?php
                                 if (empty($main->image)) {
                                     echo "./assets/images/noicon.jpg";
                                 } else {
@@ -57,6 +59,9 @@ $main = $single->getMainPost($s3, $bucket_name);
 
                                     <div class="card_message">
                                     <p><?= h($main->message); ?></p>
+                                    </div>
+                                    <div class="good_btn_wrap">
+                                        <button uk-icon="icon: heart; ratio: 1.2;" class="good_btn <?php if($isGood){ echo 'active';} ?>" data-id="<?= h($main->id); ?>"></button>
                                     </div>
                                 </div><!-- uk-card-body -->
 

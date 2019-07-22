@@ -143,3 +143,9 @@ article .uk-card-body {
 .single_main_post {
   display: flex;
 }
+.good_btn:focus {
+  outline: none;
+}
+.active {
+  color: red;
+}
